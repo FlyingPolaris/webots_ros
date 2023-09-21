@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- 打开webots -->
+    <include file="$(find webots_ros)/launch/webots.launch" />
+    <arg name="model" />
+    <arg name="gui" default="no_gui" />
+    <!-- 载入机器人模型 -->
+    <param name="robot_description" textfile="$(find webots_ros)/urdf/Robot.urdf" />
+    <param name="use_gui" value="$(arg gui)" />
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <node name="robot_broadcaster" pkg="webots_ros" type="robot_broadcaster" />
+
+    <include file="$(find webots_ros)/launch/robot_pose_ekf.launch" />
+    
+    <node pkg="tf" type="static_transform_publisher" name="link_name" args="0 0 0 0 0 0 map odom 0" />
+
+    <!-- 打开rviz -->
+    <node name="rviz" pkg="rviz" type="rviz"  args="-d $(find webots_ros)/rviz/gampping.rviz"/>
+</launch>
+

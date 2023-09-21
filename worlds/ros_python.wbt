@@ -1,0 +1,24 @@
+#VRML_SIM R2023a utf8
+
+IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+
+WorldInfo {
+  info [
+    "Simple Thymio II simulation controlled by a ROS node written in Python."
+  ]
+  title "ROS Python"
+  basicTimeStep 20
+  contactProperties [
+    ContactProperties {
+      material2 "thymio body"
+      coulombFriction [
+        0.7
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.12789900706026552 0.665017585233845 0.7357944382249323 0.7145183264380753
+  position -2.4922945423620355 -1.498033875852477 1.4599981930184418
+  follow "Thymio II"
+}

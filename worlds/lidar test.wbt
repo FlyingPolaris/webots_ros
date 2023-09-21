@@ -1,0 +1,39 @@
+#VRML_SIM R2023a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/devices/sick/protos/SickLms291.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.10508360038638312 -0.04806195862141221 0.9933013062828966 3.9944759697826457
+  position 3.2171308033139088 3.3215620573862505 0.858131175576958
+}
+TexturedBackground {
+  texture "dusk"
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 5 5
+}
+Robot {
+  translation 0 0 0.18
+  children [
+    DEF body Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.6 0.8 0.8
+        }
+      }
+      geometry Box {
+        size 0.5 0.5 0.15
+      }
+    }
+    SickLms291 {
+      translation 0.2 0 0.14
+    }
+  ]
+}

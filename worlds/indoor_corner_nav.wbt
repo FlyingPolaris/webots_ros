@@ -1,0 +1,503 @@
+#VRML_SIM R2023a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Parquetry.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/apartment_structure/protos/Wall.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Roughcast.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/humans/pedestrian/protos/Pedestrian.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/vehicles/protos/abstract/VehicleWheel.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.40500733037229625 0.3521842677698313 0.8437625873906317 1.7668893430761001
+  position 12.183971800128061 0.7273639853267344 1.4808750029598696
+  follow "vehicle"
+}
+Floor {
+  size 100 100
+  appearance Parquetry {
+    type "light strip"
+    textureTransform TextureTransform {
+      scale 0.4 0.4
+    }
+  }
+}
+TexturedBackgroundLight {
+  texture "noon_cloudy_empty"
+  luminosity 3
+  castShadows FALSE
+}
+Wall {
+  translation 10 4 4.9738e-14
+  size 20 0.2 3
+  appearance DEF wall_color Roughcast {
+    textureTransform TextureTransform {
+      scale 100 100
+    }
+  }
+}
+Wall {
+  translation 23.9 12 -1.42109e-14
+  name "wall(2)"
+  size 0.2 24 3
+  appearance DEF wall_color Roughcast {
+    textureTransform TextureTransform {
+      scale 100 100
+    }
+  }
+}
+Wall {
+  translation 0 2 -1.42109e-14
+  name "wall(1)"
+  size 0.2 4.2 3
+  appearance DEF wall_color Roughcast {
+    textureTransform TextureTransform {
+      scale 100 100
+    }
+  }
+}
+Wall {
+  translation 12 0 1.42109e-14
+  name "wall(3)"
+  size 24 0.2 3
+  appearance DEF wall_color Roughcast {
+    textureTransform TextureTransform {
+      scale 100 100
+    }
+  }
+}
+Wall {
+  translation 19.9 14 0
+  name "wall(4)"
+  size 0.2 20 3
+  appearance DEF wall_color Roughcast {
+    textureTransform TextureTransform {
+      scale 100 100
+    }
+  }
+}
+DEF p1 Pedestrian {
+  translation 20.5 8 1.47
+  rotation 0 0 1 -1.5707953071795862
+  name "pedestrian(2)"
+  controllerArgs [
+    "--range=20.5,8,20.5, 23.5, 5, 11"
+  ]
+  shirtColor 0.666667 0.333333 1
+  enableBoundingObject TRUE
+}
+DEF p2 Pedestrian {
+  translation 20.5 11 1.47
+  rotation 0 0 1 -1.5707953071795862
+  name "pedestrian(3)"
+  controllerArgs [
+    "--range=20.5,11,20.5, 23.5, 5, 11"
+  ]
+  shirtColor 0.176471 0.101961 1
+  enableBoundingObject TRUE
+}
+DEF p0 Pedestrian {
+  translation 20.5 5 1.57
+  rotation 0 0 -1 -5.307179586466759e-06
+  name "pedestrian(1)"
+  controllerArgs [
+    "--range=20.5,5,20.5, 23.5, 5, 11"
+  ]
+  shirtColor 0.666667 0 0
+  enableBoundingObject TRUE
+}
+DEF base_link Robot {
+  translation 12 2 0
+  rotation 0 0 1 4.07987e-06
+  children [
+    InertialUnit {
+      name "inertial_unit"
+    }
+    GPS {
+    }
+    DEF lidarslot Transform {
+      children [
+        Lidar {
+          translation 0.08 0 0.36
+          rotation 1 0 0 -5.307179586466759e-06
+          horizontalResolution 800
+          fieldOfView 6.28318
+          numberOfLayers 1
+          maxRange 25
+          defaultFrequency 25
+          maxFrequency 100
+        }
+      ]
+    }
+    DEF base Transform {
+      translation 0 0 0.065
+      children [
+        Transform {
+          translation -0.1825 -0.1075 0.15
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.5 0.5 0.5
+                }
+              }
+              geometry Box {
+                size 0.015 0.015 0.25
+              }
+            }
+          ]
+        }
+        Transform {
+          translation -0.1825 0.1075 0.15
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.5 0.5 0.5
+                }
+              }
+              geometry Box {
+                size 0.015 0.015 0.25
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0.1825 0.1075 0.15
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.5 0.5 0.5
+                }
+              }
+              geometry Box {
+                size 0.015 0.015 0.25
+              }
+            }
+          ]
+        }
+        DEF radar Transform {
+          translation 0.17 0 0.23
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.584314 0 0
+                }
+              }
+              geometry Box {
+                size 0.005 0.05 0.075
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0.1825 -0.1075 0.15
+          children [
+            Shape {
+              appearance DEF silver Appearance {
+                material Material {
+                  diffuseColor 0.5 0.5 0.5
+                }
+              }
+              geometry Box {
+                size 0.015 0.015 0.25
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 0 0.27
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.5 0.5 0.5
+                }
+              }
+              geometry Box {
+                size 0.39 0.24 0.01
+              }
+            }
+          ]
+        }
+        DEF lidar Transform {
+          translation 0.08 0 0.28
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.247059 0.247059 0.247059
+                }
+              }
+              geometry Cylinder {
+                height 0.025
+                radius 0.02
+              }
+            }
+          ]
+        }
+        DEF bottom Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.5 0.5 0.5
+            }
+          }
+          geometry Box {
+            size 0.39 0.24 0.06
+          }
+        }
+      ]
+    }
+    DEF left_front_wheel Transform {
+      translation 0.162 0.15 0.05
+      rotation 0 0 1 -1.5708
+      children [
+        DEF LEFT_STEER_HINGE2 Hinge2Joint {
+          jointParameters HingeJointParameters {
+            axis 0 0 -1
+            suspensionSpringConstant 100000
+            suspensionDampingConstant 4000
+            suspensionAxis 0 0 1
+          }
+          jointParameters2 JointParameters {
+            axis -1 0 0
+            dampingConstant 5
+          }
+          device [
+            RotationalMotor {
+              name "left_steer"
+              minPosition -1.34
+              maxPosition 1.34
+              maxTorque 10000
+              sound ""
+            }
+            PositionSensor {
+              name "left_steer_sensor"
+            }
+          ]
+          device2 [
+            RotationalMotor {
+              name "left_front_wheel"
+              acceleration 694.4444444444445
+              maxVelocity 29.799999999999997
+              maxTorque 100000000
+              sound ""
+            }
+            PositionSensor {
+              name "left_front_sensor"
+            }
+            Brake {
+              name "left_front_brake"
+            }
+          ]
+          endPoint Slot {
+            type "vehicle wheel"
+            endPoint VehicleWheel {
+              thickness 0.04
+              tireRadius 0.05
+              rimRadius 0.02
+              rimBeamWidth 0.01
+              centralInnerRadius 0.009
+              centralOuterRadius 0.013
+              rimBeamThickness 0.04
+              rimBeamOffset 0
+            }
+          }
+        }
+      ]
+    }
+    DEF right_front_wheel Transform {
+      translation 0.162 -0.15 0.05
+      rotation 0 0 1 1.5708
+      children [
+        DEF RIGHT_STEER_HINGE2 Hinge2Joint {
+          jointParameters HingeJointParameters {
+            axis 0 0 -1
+            suspensionSpringConstant 100000
+            suspensionDampingConstant 4000
+            suspensionAxis 0 0 1
+          }
+          jointParameters2 JointParameters {
+            axis 1 0 0
+            dampingConstant 5
+          }
+          device [
+            RotationalMotor {
+              name "right_steer"
+              minPosition -1.34
+              maxPosition 1.34
+              maxTorque 10000
+              sound ""
+            }
+            PositionSensor {
+              name "right_steer_sensor"
+            }
+          ]
+          device2 [
+            RotationalMotor {
+              name "right_front_wheel"
+              acceleration 694.4444444444445
+              maxVelocity 29.799999999999997
+              maxTorque 100000000
+              sound ""
+            }
+            PositionSensor {
+              name "right_front_sensor"
+            }
+            Brake {
+              name "right_front_brake"
+            }
+          ]
+          endPoint Slot {
+            type "vehicle wheel"
+            endPoint VehicleWheel {
+              name "vehicle wheel(1)"
+              thickness 0.04
+              tireRadius 0.05
+              rimRadius 0.02
+              rimBeamWidth 0.01
+              centralInnerRadius 0.009
+              centralOuterRadius 0.013
+              rimBeamThickness 0.04
+              rimBeamOffset 0
+            }
+          }
+        }
+      ]
+    }
+    DEF left_rear_wheel Transform {
+      translation -0.162 0.15 0.05
+      rotation 0 0 1 -1.5708
+      children [
+        DEF LEFT_REAR_WHEEL_HINGE HingeJoint {
+          jointParameters HingeJointParameters {
+            axis -1 0 0
+            dampingConstant 5
+            suspensionSpringConstant 100000
+            suspensionDampingConstant 4000
+            suspensionAxis 0 0 1
+          }
+          device [
+            RotationalMotor {
+              name "left_rear_wheel"
+              acceleration 694.4444444444445
+              maxVelocity 29.799999999999997
+              maxTorque 100000000
+              sound ""
+            }
+            PositionSensor {
+              name "left_rear_sensor"
+            }
+            Brake {
+              name "left_rear_brake"
+            }
+          ]
+          endPoint Slot {
+            type "vehicle wheel"
+            endPoint VehicleWheel {
+              name "vehicle wheel(2)"
+              thickness 0.04
+              tireRadius 0.05
+              rimRadius 0.02
+              rimBeamWidth 0.01
+              centralInnerRadius 0.009
+              centralOuterRadius 0.013
+              rimBeamThickness 0.04
+              rimBeamOffset 0
+            }
+          }
+        }
+      ]
+    }
+    DEF right_rear_wheel Transform {
+      translation -0.162 -0.15 0.05
+      rotation 0 0 1 1.5708
+      children [
+        DEF RIGHT_REAR_WHEEL_HINGE HingeJoint {
+          jointParameters HingeJointParameters {
+            dampingConstant 5
+            suspensionSpringConstant 100000
+            suspensionDampingConstant 4000
+            suspensionAxis 0 0 1
+          }
+          device [
+            RotationalMotor {
+              name "right_rear_wheel"
+              acceleration 694.4444444444445
+              maxVelocity 29.799999999999997
+              maxTorque 100000000
+              sound ""
+            }
+            PositionSensor {
+              name "right_rear_sensor"
+            }
+            Brake {
+              name "right_rear_brake"
+            }
+          ]
+          endPoint Slot {
+            type "vehicle wheel"
+            endPoint VehicleWheel {
+              name "vehicle wheel(3)"
+              thickness 0.04
+              tireRadius 0.05
+              rimRadius 0.02
+              rimBeamWidth 0.01
+              centralInnerRadius 0.009
+              centralOuterRadius 0.013
+              rimBeamThickness 0.04
+              rimBeamOffset 0
+            }
+          }
+        }
+      ]
+    }
+    Speaker {
+      translation 0.1 0 0
+      name "engine_speaker"
+    }
+    Group {
+      children [
+        DEF touchsensor TouchSensor {
+          boundingObject Transform {
+            translation 0 0 0.19
+            children [
+              Box {
+                size 0.43 0.34 0.32
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+  name "vehicle"
+  model "Altino"
+  boundingObject Transform {
+    translation 0 0 0.19
+    children [
+      Box {
+        size 0.39 0.24 0.32
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 2
+  }
+  radarCrossSection 100
+  controller "ros_automobile"
+  controllerArgs [
+    "--name=vehicle"
+  ]
+  customData "0.1 0.08 0.08 0.02 0.02 700 5 E 0.1 1 1 250 150 0.1 0 0.25 3000 1000 2 4 -30 30 none "
+  supervisor TRUE
+}
+DEF supervisor_node Robot {
+  controller "<extern>"
+  supervisor TRUE
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<launch>
+  <master auto="start"/>
+
+  <!-- Run the map server -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find webots_ros)/config/map.yaml ">
+  </node>
+
+  <!-- 开启用于导航的自适应蒙特卡洛定位amcl-->
+  <include file="$(find webots_ros)/launch/amcl.launch" />
+
+  <!-- amcl定位 -->
+  <!-- <node pkg="amcl" type="amcl" name="amcl" output="screen">
+    <remap from="scan" to="/vehicle/lidar/laser_scan"/>
+    <param name="odom_frame_id" value="odom"/>
+    <param name="odom_model_type" value="diff-corrected"/>
+    <param name="base_frame_id" value="base_link"/>
+    <param name="global_frame_id" value="map"/> -->
+    
+    <!--transform tolerance-->
+    <!-- <param name="transform_tolerance" value="0.9"/> -->
+    
+    <!--overall filter-->
+    <!-- <param name="min_particles" value="25"/>
+    <param name="max_particles" value="50"/>
+    <param name="initial_pose_x" value="12.0"/>
+    <param name="initial_pose_y" value="0.0"/>
+    <param name="updata_min_a" value="0.1"/>
+    <param name="update_min_d" value="0.25"/> -->
+    
+    <!--likelihood_field of laser-->
+    <!-- <param name="laser_min_range" value="1.0"/>
+    <param name="laser_max_range" value="25"/>
+    <param name="laser_max_beams" value="30"/>
+    <param name="laser_z_hit" value="0.95"/>
+    <param name="laser_z_rand" value="0.05"/> -->
+    
+    <!--Odometry-->
+    <!-- <param name="odom_model_type" value="diff"/>
+    <param name="odom_alpha1" value="0.2"/>
+    <param name="odom_alpha2" value="0.2"/>
+    <param name="odom_alpha3" value="0.2"/>
+    <param name="odom_alpha4" value="0.2"/> -->
+
+  <!-- move_base 导航 -->
+  <include file="$(find webots_ros)/launch/teb_local_planner.launch" />
+
+
+</launch>
+

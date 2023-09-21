@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- 打开webots -->
+    <include file="$(find webots_ros)/launch/webots.launch" />
+    <arg name="model" />
+    <arg name="gui" default="false" />
+    <arg name="world" value="$(find webots_ros)/worlds/indoor_corner_nav.wbt"/>
+    <param name="robot_description" textfile="$(find webots_ros)/urdf/Rosbot.urdf" />
+    <param name="use_gui" value="$(arg gui)" />
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <node name="robot_broadcaster_nav" pkg="webots_ros" type="robot_broadcaster_nav" />
+</launch>
