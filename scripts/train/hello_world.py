@@ -2,8 +2,9 @@ from controller import *
 from ros_utils import *
 from multiprocessing import Process, Pool
 import globalvar as gl
+import numpy as np
 
-robot = Supervisor()
+supervisor = Supervisor()
 
 timestep = 32*3
 
@@ -26,21 +27,44 @@ timestep = 32*3
 # # rospy.sleep(0.1)
 # flag = 1
 
-gl._init()
-rospy.init_node('touch_sensor_listener', anonymous=True)
-touch = threading.Thread(target=rostopic_touch_sensor_get)
-touch.start()
 
-pointcloud = threading.Thread(target=rostopic_lidar_pointcloud_get)
-pointcloud.start()
+rospy.init_node('hello', anonymous=True)
+# touch = threading.Thread(target=rostopic_touch_sensor_get)
+# touch.start()
+
+# pointcloud = threading.Thread(target=rostopic_lidar_pointcloud_get)
+# pointcloud.start()
 
 while True:
     print('hello ros!')
     # rostopic_touch_sensor_get()
-    print(gl.get_value('touch'))
-    print(gl.get_value('point_cloud'))
+    # print(gl.get_value('touch'))
+    # print(gl.get_value('point_cloud'))
+    robot_node = supervisor.getFromDef("base_link")
+    robot_pos_field = robot_node.getField("translation")
+    robot_rot_field = robot_node.getField("rotation")
+    robot_pos_list = robot_pos_field.getSFVec3f()[:2]
+    robot_rot_list = robot_rot_field.getSFRotation()
+    x, y = robot_pos_list
+    theta = robot_rot_list[3] if robot_rot_list[2] >= 0 else -robot_rot_list[3]
+    
+    success = False
 
-    robot.step(timestep)
+    delta_r = np.random.uniform(0, 0.5)
+    delta_theta = np.random.uniform(-np.pi/20, np.pi/20)
+    theta_ = theta + delta_theta
+    x_ = x + delta_r * np.cos(theta_)
+    y_ = y + delta_r * np.sin(theta_)
+    
+    pub = rospy.Publisher('goal_list', Float64MultiArray, queue_size=10)
+    array = Float64MultiArray()
+    array.data = [x_, y_, theta_]
+    loop_rate = rospy.Rate(50)
+    pub.publish(array)
+    loop_rate.sleep()
+
+
+    supervisor.step(timestep)
 
     # print(rosservice_lidar_pointcloud_get())
     # pool.close()
