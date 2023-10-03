@@ -4,11 +4,11 @@ clip_param: 0.2
 gamma: 0.99
 gae_lambda: 0.95
 max_grad_norm: 0.5
-lr_actor: 0.005
-lr_critic: 0.005
-n_epoch: 2000
+lr_actor: 0.001
+lr_critic: 0.002
+n_epoch: 5000
 repeat_per_epoch: 10
-max_ep_len: 800
+max_ep_len: 600
 kl_stop: true
 kl_margin: 1.4
 target_kl: 0.01
@@ -21,8 +21,8 @@ dist_beta: 0
 use_rnn: 0
 use_gru: 0
 map_radar: 0
-map_len: 24
-map_side_grids: 224
+map_len: 18
+map_side_grids: 180
 reward_distance_goal: 1.5
 reward_distance_move: 0.05
 reward_weight_goal: 75

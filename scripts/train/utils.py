@@ -89,110 +89,101 @@ def bresenham(grid, x0, y0, x1, y1, flag):
             y0 += sy
 
 
-def bresenham_2(x0, y0, x1, y1):
-    side = []
-    dx = abs(x1 - x0)
-    dy = abs(y1 - y0)
-    sx = -1 if x0 > x1 else 1
-    sy = -1 if y0 > y1 else 1
-    err = dx - dy
+# def bresenham_2(x0, y0, x1, y1):
+#     side = []
+#     dx = abs(x1 - x0)
+#     dy = abs(y1 - y0)
+#     sx = -1 if x0 > x1 else 1
+#     sy = -1 if y0 > y1 else 1
+#     err = dx - dy
 
-    while True:
-        side.append((x0, y0))
-        if x0 == x1 and y0 == y1:
-            break
-        e2 = 2 * err
-        if e2 > -dy:
-            err -= dy
-            x0 += sx
-        if e2 < dx:
-            err += dx
-            y0 += sy
+#     while True:
+#         side.append((x0, y0))
+#         if x0 == x1 and y0 == y1:
+#             break
+#         e2 = 2 * err
+#         if e2 > -dy:
+#             err -= dy
+#             x0 += sx
+#         if e2 < dx:
+#             err += dx
+#             y0 += sy
 
-    return side
+#     return side
 
 
-def map_robot_pos(grid, n, l, pos, theta, size):
+# def map_robot_pos(grid, n, l, pos, theta, size):
+#     d = l / n
+#     corners = [
+#         (int((pos[0] + size[0] / 2 * math.cos(theta) - size[1] / 2 * math.sin(theta)) // d),
+#          int((pos[1] + size[0] / 2 * math.sin(theta) + size[1] / 2 * math.cos(theta)) // d)),
+#         (int((pos[0] + size[0] / 2 * math.cos(theta) + size[1] / 2 * math.sin(theta)) // d),
+#          int((pos[1] + size[0] / 2 * math.sin(theta) - size[1] / 2 * math.cos(theta)) // d)),
+#         (int((pos[0] - size[0] / 2 * math.cos(theta) - size[1] / 2 * math.sin(theta)) // d),
+#          int((pos[1] - size[0] / 2 * math.sin(theta) + size[1] / 2 * math.cos(theta)) // d)),
+#         (int((pos[0] - size[0] / 2 * math.cos(theta) + size[1] / 2 * math.sin(theta)) // d),
+#          int((pos[1] - size[0] / 2 * math.sin(theta) - size[1] / 2 * math.cos(theta)) // d))
+#     ]
+#     side1 = bresenham_2(corners[0][0], corners[0][1], corners[1][0], corners[1][1])
+#     side2 = bresenham_2(corners[2][0], corners[2][1], corners[3][0], corners[3][1])
+
+#     for i in range(len(side1)):
+#         for j in range(len(side2)):
+#             bresenham(grid, side1[i][0], side1[i][1], side2[j][0], side2[j][1], 0)
+
+#     return grid
+
+
+# def map_wall_pos(grid, n, l, wall):
+#     d = l / n
+#     x1, y1, x0, y0 = wall
+#     bresenham(grid, int(x0 // d), int(n - 1), int(x0 // d), int(y0 // d), -1)
+#     bresenham(grid, int(0), int(y0 // d), int(x0 // d), int(y0 // d), -1)
+#     bresenham(grid, int(x1 // d), int(n - 1), int(x1 // d), int(y1 // d), -1)
+#     bresenham(grid, int(0), int(y1 // d), int(x1 // d), int(y1 // d), -1)
+
+#     for i in range(0, int(x0 // d)):
+#         for j in range(int(y0 // d), n):
+#             grid[i][j] = -1
+
+#     return grid
+
+def map_lidar_pointcloud(grid, theta, points, n, l):
     d = l / n
-    corners = [
-        (int((pos[0] + size[0] / 2 * math.cos(theta) - size[1] / 2 * math.sin(theta)) // d),
-         int((pos[1] + size[0] / 2 * math.sin(theta) + size[1] / 2 * math.cos(theta)) // d)),
-        (int((pos[0] + size[0] / 2 * math.cos(theta) + size[1] / 2 * math.sin(theta)) // d),
-         int((pos[1] + size[0] / 2 * math.sin(theta) - size[1] / 2 * math.cos(theta)) // d)),
-        (int((pos[0] - size[0] / 2 * math.cos(theta) - size[1] / 2 * math.sin(theta)) // d),
-         int((pos[1] - size[0] / 2 * math.sin(theta) + size[1] / 2 * math.cos(theta)) // d)),
-        (int((pos[0] - size[0] / 2 * math.cos(theta) + size[1] / 2 * math.sin(theta)) // d),
-         int((pos[1] - size[0] / 2 * math.sin(theta) - size[1] / 2 * math.cos(theta)) // d))
-    ]
-    side1 = bresenham_2(corners[0][0], corners[0][1], corners[1][0], corners[1][1])
-    side2 = bresenham_2(corners[2][0], corners[2][1], corners[3][0], corners[3][1])
-
-    for i in range(len(side1)):
-        for j in range(len(side2)):
-            bresenham(grid, side1[i][0], side1[i][1], side2[j][0], side2[j][1], 0)
-
-    return grid
-
-
-def map_wall_pos(grid, n, l, wall):
-    d = l / n
-    x1, y1, x0, y0 = wall
-    bresenham(grid, int(x0 // d), int(n - 1), int(x0 // d), int(y0 // d), -1)
-    bresenham(grid, int(0), int(y0 // d), int(x0 // d), int(y0 // d), -1)
-    bresenham(grid, int(x1 // d), int(n - 1), int(x1 // d), int(y1 // d), -1)
-    bresenham(grid, int(0), int(y1 // d), int(x1 // d), int(y1 // d), -1)
-
-    for i in range(0, int(x0 // d)):
-        for j in range(int(y0 // d), n):
-            grid[i][j] = -1
-
-    return grid
-
-
-def map_lidar_pointcloud(grid, pos, theta, points, n, l):
-    d = l / n
-    ci = int(pos[0] // d)
-    cj = int(pos[1] // d)
-    # theta = 0
+    x_min, x_max = -l / 2, l / 2
+    y_min, y_max = -l / 2, l / 2
+    cx, cy = 0, n // 2
     if points == None:
         return grid
     for point in points:
-        x = point[0] * math.cos(theta) - point[1] * math.sin(theta) + pos[0]
-        y = point[0] * math.sin(theta) + point[1] * math.cos(theta) + pos[1]
-
-        if x <= 0:
-            i = 0
-        elif x >= l:
-            i = n - 1
-        else:
-            i = int(x // d)
-
-        if y <= 0:
-            j = 0
-        elif y >= l:
-            j = n - 1
-        else:
-            j = int(y // d)
-
-        bresenham(grid, ci, cj, i, j, 1)
-        grid[i][j] = -1
-
+        x = point[0]
+        y = point[1]
+        if x_min <= x < x_max and y_min <= y < y_max:
+            i = int((x - x_min) // d)
+            j = int((y - y_min) // d)
+            if grid[i][j] != 1:
+                bresenham(grid, cx, cy, i, j, 0)
+                grid[i][j] = 1   
     return grid
 
 
 def map_radar_res(grid, n, l, radar_res, pos):
     d = l / n
-    for obj in radar_res:
-        x = obj[0]
-        y = obj[1]
-        ci = int(x // d)
-        cj = int(y // d)
-        for i in range(ci - 3, ci + 3):
-            for j in range(cj - 3, cj + 3):
-                if 0 <= i < n and 0 <= j < n:
-                    grid[i][j] = 2
-    return grid
+    x_min, x_max = 0, l
+    y_min, y_max = -l / 2, l / 2
+    
+    for object in radar_res:
+        x = object[0] - pos[0]
+        y = object[1] - pos[1]
+        if x_min <= x < x_max and y_min <= y < y_max:
+            ci = int((x - x_min) // d)
+            cj = int((y - y_min) // d)
+            for i in range(ci - 2, ci + 2):
+                for j in range(cj - 2, cj + 2):
+                    if 0 <= i < n and 0 <= j < n:
+                        grid[i][j] = 2
 
+    return grid
 
 def area_corner_obstacles_getting(robot_pos, robot_vel):
     x = robot_pos[0]

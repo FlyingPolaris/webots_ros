@@ -112,7 +112,7 @@ class PPO:
         self.writer = writer
 
         self.device = config['device']
-        self.save_thre = self.conf['n_epoch'] * 0.6
+        self.save_thre = self.conf['n_epoch'] * 0.1
 
         self.rewardscaling = RewardScaling(shape=1, gamma=self.conf['gamma'])
 
@@ -196,12 +196,12 @@ class PPO:
             para1.cpu().numpy().squeeze(), para2.cpu().numpy().squeeze()
 
     def map_action(self, act):
-
-        act = np.clip(act, -1.0, 1.0).squeeze()
-        low, high = self.env.action_space.low, self.env.action_space.high
-        act = low + (high - low) * (act + 1.0) / 2.0
-        return act
-
+        
+        action = np.clip(act, -1, 1).squeeze()
+        v = action[0] * self.env.max_v
+        w = action[1] * self.env.max_w
+        return [v, w]
+    
     def rollout(self):
         """Agent interacts with environment for one trajectory.
         """

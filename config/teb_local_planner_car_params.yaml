@@ -15,7 +15,7 @@ TebLocalPlannerROS:
   #阿克曼小车参数，非阿克曼小车设置为0
   min_turning_radius: 0.0 #机器人最小转弯半径
   wheelbase: 0.0 #机器人轴距，前轮与后轮的距离
-  cmd_angle_instead_rotvel: False #true则cmd_vel/angular/z内的数据是舵机角度
+  cmd_angle_instead_rotvel: False #true则 cmd_vel/angular/z 内 的数据是舵机角度
                                   #无论是不是阿克曼小车都设置为false，因为我们的阿克曼机器人内部进行了速度转换
 
   #用于局部路径规划的机器人外形

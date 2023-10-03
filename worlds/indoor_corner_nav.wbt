@@ -11,9 +11,10 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/project
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.40500733037229625 0.3521842677698313 0.8437625873906317 1.7668893430761001
-  position 12.183971800128061 0.7273639853267344 1.4808750029598696
+  orientation -0.5599972029718938 0.5075915250097376 0.6547930790730341 1.9931376932455025
+  position 14.538467859132878 -5.921941879534425 33.20853102668659
   follow "vehicle"
+  followType "None"
 }
 Floor {
   size 100 100
@@ -463,6 +464,7 @@ DEF base_link Robot {
     Group {
       children [
         DEF touchsensor TouchSensor {
+          name "touch_sensor"
           boundingObject Transform {
             translation 0 0 0.19
             children [
@@ -490,14 +492,10 @@ DEF base_link Robot {
     mass 2
   }
   radarCrossSection 100
-  controller "ros_automobile"
+  controller "<extern>"
   controllerArgs [
     "--name=vehicle"
   ]
   customData "0.1 0.08 0.08 0.02 0.02 700 5 E 0.1 1 1 250 150 0.1 0 0.25 3000 1000 2 4 -30 30 none "
-  supervisor TRUE
-}
-DEF supervisor_node Robot {
-  controller "<extern>"
   supervisor TRUE
 }
