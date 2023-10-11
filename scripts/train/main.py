@@ -42,6 +42,10 @@ def main(config, writer):
             return Independent(Beta(para1, para2), 1)
         else:
             return Independent(Normal(para1, para2), 1)
+        
+    if config['load']:
+        actor.load_state_dict(th.load(config['actor_path'], map_location=config['device']))
+        critic.load_state_dict(th.load(config['critic_path'], map_location=config['device']))
 
     actor_optim = th.optim.Adam(actor.parameters(), lr=config['lr_actor'], eps=1e-5)
     critic_optim = th.optim.Adam(critic.parameters(), lr=config['lr_critic'], eps=1e-5)

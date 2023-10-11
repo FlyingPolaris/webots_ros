@@ -87,10 +87,10 @@ if __name__ == '__main__':
                         help='world file path')
     parser.add_argument('--fov', type=float, default=math.pi / 3, help='field of view')
     parser.add_argument('--sample_points_num', type=int, default=10, help='number of sample points')
-    parser.add_argument('--config', type=str, default='conf/test.yaml')
+    parser.add_argument('--config', type=str, default='scripts/train/conf/test.yaml')
     parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--actor_path', type=str,
-                        default='C:/webots/corner_nav/controllers/robot/output_radar/ppo_agent/20230610_132824/actor_3999.pth')
+                        default='output_radar/ppo_agent/20231006_223910/actor_499.pth')
     args = parser.parse_args()
     
     with open(args.config) as f:

@@ -173,7 +173,7 @@ class CornerEnv(gym.Env):
         self.driver.setSteeringAngle(0)
         self.driver.setCruisingSpeed(0)
 
-        start_pos = [12, 2, 0]
+        start_pos = [10, 2, 0]
         # start_pos[0] += 0.5
         start_rot = [0, 0, 1, -math.pi / 4]
         # start_rot[3] -= math.pi / 2
@@ -194,7 +194,8 @@ class CornerEnv(gym.Env):
     def close(self):
 
         # 关闭环境
-        self.supervisor.simulationQuit(0)
+        # self.supervisor.simulationQuit(0)
+        pass
 
     def get_default_observation(self):
 
@@ -243,8 +244,8 @@ class CornerEnv(gym.Env):
         radar_detected_list, radar_res = self.radar.get_res()
 
         pos_map = np.full((map_side_block_num, map_side_block_num), -1)
-        pos_map = map_lidar_pointcloud(pos_map, robot_rot, lidar_res, map_side_block_num, map_len)
-        pos_map = map_radar_res(pos_map, map_side_block_num, map_len, radar_res, robot_pos_list)
+        pos_map = map_lidar_pointcloud(pos_map, lidar_res, map_side_block_num, map_len)
+        pos_map = map_radar_res(pos_map, robot_rot, map_side_block_num, map_len, radar_res, robot_pos_list)
         # pos_map = map_wall_pos(pos_map, map_side_block_num, map_len, wall)
         # pos_map = map_robot_pos(pos_map, map_side_block_num, map_len, robot_pos_list, robot_rot, self.robot_size)
 
@@ -351,7 +352,7 @@ class CornerEnv(gym.Env):
         # r_r = w_r * (action[0] - w_w * abs(action[1]))
         # r_r = 0
 
-        w_l = 35
+        w_l = 30
         w_c = -50
         w_x = 0.05
         w_y = 0.05
@@ -367,11 +368,12 @@ class CornerEnv(gym.Env):
         if robot_pos[0][0] >= 20:
             r4 = 100
             self.done = True
-        r5 = -0.25 * abs(robot_rot[0][0])
+        r5 = -0.3 * abs(robot_rot[0][0])
         r_c = w_c if self.collision else 0
         r_r = w_r * (action[0] - 2 * abs(action[1]))
-        r_m = w_m if np.linalg.norm(np.array(robot_pos) - np.array(robot_last_pos)) <= 0.05 else 0
-        r = r2 + r3 + r4 + r5 + r_c + r_m + r_r
+        r_back = -1 if action[0] < 0 else 0
+        r_m = w_m if np.linalg.norm(np.array(robot_pos) - np.array(robot_last_pos)) <= 0.06 else 0
+        r = r1 + r2 + r3 + r4 + r5 + r_c + r_m + r_r + r_back
         return r
 
     def is_done(self):

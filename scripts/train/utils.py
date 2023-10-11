@@ -148,11 +148,11 @@ def bresenham(grid, x0, y0, x1, y1, flag):
 
 #     return grid
 
-def map_lidar_pointcloud(grid, theta, points, n, l):
+def map_lidar_pointcloud(grid, points, n, l):
     d = l / n
     x_min, x_max = -l / 2, l / 2
     y_min, y_max = -l / 2, l / 2
-    cx, cy = 0, n // 2
+    cx, cy = n // 2, n // 2
     if points == None:
         return grid
     for point in points:
@@ -167,17 +167,19 @@ def map_lidar_pointcloud(grid, theta, points, n, l):
     return grid
 
 
-def map_radar_res(grid, n, l, radar_res, pos):
+def map_radar_res(grid, theta, n, l, radar_res, pos):
     d = l / n
-    x_min, x_max = 0, l
+    x_min, x_max = -l / 2, l / 2
     y_min, y_max = -l / 2, l / 2
     
     for object in radar_res:
         x = object[0] - pos[0]
         y = object[1] - pos[1]
-        if x_min <= x < x_max and y_min <= y < y_max:
-            ci = int((x - x_min) // d)
-            cj = int((y - y_min) // d)
+        cx = x * math.cos(theta) + y * math.sin(theta)
+        cy = -x * math.sin(theta) + y * math.cos(theta)
+        if x_min <= cx < x_max and y_min <= cy < y_max:
+            ci = int((cx - x_min) // d)
+            cj = int((cy - y_min) // d)
             for i in range(ci - 2, ci + 2):
                 for j in range(cj - 2, cj + 2):
                     if 0 <= i < n and 0 <= j < n:
